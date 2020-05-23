@@ -1,0 +1,15 @@
+.Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;    
+}
+
+.Date {
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+.Hr {
+    margin: 0;
+}

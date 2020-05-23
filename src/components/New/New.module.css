@@ -1,0 +1,37 @@
+.New {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.Title {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.Image {
+    width: 100%;
+    height: auto;
+}
+
+.Date {
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #a02222;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.Source {
+    font-size: 14px;
+    color: grey;
+    font-weight: 200;
+    font-style: italic;
+}
+
+@media(min-width: 768px) {
+    .New {
+        padding: 30px;
+    }
+}
