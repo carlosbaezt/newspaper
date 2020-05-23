@@ -4,3 +4,13 @@
     flex-wrap: wrap;
     text-transform: uppercase;
 }
+
+.Link {
+    text-decoration: none;
+    color: black;
+}
+
+.Active {
+    color: #a02222;
+    font-weight: bold;
+}

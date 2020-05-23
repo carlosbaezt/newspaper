@@ -34,4 +34,8 @@
     .New {
         padding: 30px;
     }
+
+    .Image {
+        width: 70%;
+    }
 }

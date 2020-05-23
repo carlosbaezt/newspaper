@@ -3,7 +3,7 @@ import classes from './Logo.module.css';
 
 const Logo = () => {
     return (
-        <h1 className={classes.Logo}>New York Post</h1>
+        <h1 className={classes.Logo}>Latinoamérica Post</h1>
     );
 }
 

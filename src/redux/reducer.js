@@ -14,7 +14,7 @@ const types = {
 
 export const actions = {
     getNews: () => (dispatch) => {
-
+        
         dispatch({ type: types.FETCH_NEWS });
 
         setTimeout(() => {
@@ -35,7 +35,7 @@ export const actions = {
                 });
 
             });
-        }, 2000); 
+        }, 1000); 
     },
 };
 

@@ -2,14 +2,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;    
+    flex-wrap: wrap;
+    padding: 10px;
 }
 
 .Date {
-    padding: 10px;
     text-transform: capitalize;
 }
 
 .Hr {
     margin: 0;
+}
+
+@media(min-width: 768px) {
+    .Header {
+        padding: 10px 30px;
+    }
 }
