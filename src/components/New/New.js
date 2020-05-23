@@ -5,7 +5,6 @@ import 'moment/locale/es';
 
 const New = props => {
     const { newInfo }  = props;
-    console.log(newInfo);
 
     const date = moment.unix(newInfo.date).locale("es"); 
     return (

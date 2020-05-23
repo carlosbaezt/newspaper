@@ -1,12 +1,12 @@
 import React from 'react';
 import Toolbar from '../Toolbar/Toolbar';
-import NewList from '../NewList/NewList';
+import NewsContainer from '../NewsContainer/NewsContainer';
 
 const Layout = () => {
     return (
         <div>
             <Toolbar />
-            <NewList />
+            <NewsContainer category='social' />
         </div>
     );
 }

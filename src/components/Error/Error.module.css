@@ -1,0 +1,14 @@
+.Error {
+    padding: 30px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.Image {
+    width: 200px;
+}
+
+.Text {
+    padding: 5px;
+}
