@@ -27,7 +27,7 @@ const SearchBar = () => {
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 type='text'
-                placeholder='Digite su busqueda'
+                placeholder='Digite su búsqueda'
                 className={classes.input}></input>
             <button
                 onClick={onClickHandler}

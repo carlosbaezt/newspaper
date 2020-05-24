@@ -1,0 +1,21 @@
+.Pagination {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 40px;
+    align-items: center;
+}
+
+.Pagination i {
+    cursor: pointer;
+}
+
+.Position {
+    font-size: 3em;
+    cursor: pointer;
+    padding: 0px 10px ;
+}
+
+.Position.Active {
+    color: darkblue;
+}

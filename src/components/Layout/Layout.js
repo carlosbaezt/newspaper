@@ -19,12 +19,12 @@ const Layout = ({getNews}) => {
             <Switch>
                 <Route
                     path="/category/:categoryName"
-                    render={(props) => <NewsContainer category={props.match.params.categoryName} {...props} />}  />
+                    render={(props) => <NewsContainer defaultPosition={1} category={props.match.params.categoryName} {...props} />}  />
                 <Route
                     path="/search/:search"
-                    render={(props) => <NewsContainer search={props.match.params.search} {...props} />}  />
+                    render={(props) => <NewsContainer defaultPosition={1} search={props.match.params.search} {...props} />}  />
                 <Route path="/">
-                    <NewsContainer />
+                    <NewsContainer defaultPosition={1} />
                 </Route>
             </Switch>
         </div>

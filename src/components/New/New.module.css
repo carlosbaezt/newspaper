@@ -30,6 +30,12 @@
     font-style: italic;
 }
 
+.Link {
+    text-decoration: none;
+    color: darkblue;
+    padding-top: 10px;
+}
+
 @media(min-width: 768px) {
     .New {
         padding: 30px;
