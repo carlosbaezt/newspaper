@@ -1,21 +1,33 @@
-import React , { useEffect } from 'react';
+import React , { useEffect, useState } from 'react';
 import Toolbar from '../Toolbar/Toolbar';
 import NewsContainer from '../NewsContainer/NewsContainer';
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { actions } from '../../redux/reducer';
+import styled from 'styled-components';
 
 const { getNews } = actions;
 
 const Layout = ({getNews}) => {
+    const defaultColor = '#fdebd3';
+    const [color, setColor] = useState(defaultColor);
 
     useEffect(() => {
         getNews();
     }, []);
 
+    const setColorHandler = () => {
+        setColor(color === defaultColor ? '#fff' : defaultColor);
+    }
+
+    const Container = styled.div`
+        background-color: ${color};
+        min-height: 100vh
+    `;
+
     return (
-        <div>
-            <Toolbar />
+        <Container>
+            <Toolbar setColor={setColorHandler} activeByDefault={color !== defaultColor} />
             <Switch>
                 <Route
                     path="/category/:categoryName"
@@ -27,7 +39,7 @@ const Layout = ({getNews}) => {
                     <NewsContainer defaultPosition={1} />
                 </Route>
             </Switch>
-        </div>
+        </Container>
     );
 }
 
