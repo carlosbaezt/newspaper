@@ -2,10 +2,11 @@ import React from 'react';
 import Category from '../Category/Category';
 import classes from './CategoryList.module.css'
 import { NavLink} from 'react-router-dom';
+import categories from '../../utils/categories';
 
 
 const CategoryList = () => {
-    const categories = ['Internacionales', 'Deportes', 'Espectáculos', 'Tecnología', 'Política'];
+    //const categories = ['Internacionales', 'Deportes', 'Espectáculos', 'Tecnología', 'Política'];
     return (
         <div className={classes.CategoryList}>
             <NavLink
@@ -17,11 +18,11 @@ const CategoryList = () => {
             </NavLink>
             { categories.map(category => {
                 return <NavLink
-                            key={category}
-                            to={'/category/'+category}
+                            key={category.name}
+                            to={'/category/'+category.name}
                             activeClassName={classes.Active}
                             className={classes.Link}>
-                            <Category name={category} />
+                            <Category name={category.name} />
                         </NavLink>
             })}
         </div>

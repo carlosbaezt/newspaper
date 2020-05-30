@@ -1,22 +1,42 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import NewList from '../NewList/NewList';
 import Loader from '../Loader/Loader';
 import Error from '../Error/Error';
 import { connect } from "react-redux";
 import errorClasses from '../Error/Error.module.css';
+import { actions } from '../../redux/reducer';
+import categories from '../../utils/categories';
+const { getNewsBySearch, getNewsByCategoryId, getAllNews } = actions;
 
-class NewsContainer extends React.Component {
+class NewsContainer extends React.PureComponent {
 
     state = {positionActive: this.props.defaultPosition}
 
-    componentWillReceiveProps(newProps) {
-        if(newProps.category !== this.props.category || newProps.search !== this.props.search) {
-            this.setState({
-                positionActive: this.props.defaultPosition
-            })
+    componentDidMount() {
+        if(this.props.home) {
+            this.props.getAllNews();
+        } else if (this.props.category !== undefined) {
+            const categoryObject = categories.find(category => category.name === this.props.category);
+            this.props.getNewsByCategoryId(categoryObject.id);
+        } else if (this.props.search) {
+            this.props.getNewsBySearch(this.props.search);
         }
     }
 
+    componentWillReceiveProps(newProps) {
+        if(this.props.home === false && newProps.home === true) {
+            this.setState({ positionActive: this.props.defaultPosition });
+            this.props.getAllNews();
+        }else if(newProps.category !== undefined && newProps.category !== this.props.category) {
+            this.setState({ positionActive: this.props.defaultPosition });
+            const categoryObject = categories.find(category => category.name === newProps.category);
+            this.props.getNewsByCategoryId(categoryObject.id);
+        }else if(newProps.search !== undefined && newProps.search !== this.props.search) {
+            this.setState({ positionActive: this.props.defaultPosition });
+            this.props.getNewsBySearch(newProps.search);
+        }
+    }
+    
     setPositionActive = (newPosition) => {
         this.setState({
             positionActive: newPosition
@@ -24,7 +44,7 @@ class NewsContainer extends React.Component {
     }
     
     render() {
-        const { loading, error, news = [], category, search } = this.props;
+        const { loading, error, news = [] } = this.props;
 
         if(loading) {
             return <Loader />
@@ -38,17 +58,9 @@ class NewsContainer extends React.Component {
         }    
     
         if(news.length > 0) {
-            let newsToDisplay = news;
-    
-            if(category) {
-                newsToDisplay = this.filterNewsByCategory(news, category);
-            } else if (search) {
-                newsToDisplay = this.filterNewsBySearch(news, search);
-            }
-    
+            let newsToDisplay = news;    
             if(newsToDisplay.length > 0) {
                 const numberOfNewsPerPage = 9;
-
                 const start = (this.state.positionActive - 1) * numberOfNewsPerPage;
                 const end = start + numberOfNewsPerPage;
                 const total = Math.ceil(newsToDisplay.length/numberOfNewsPerPage);
@@ -62,38 +74,21 @@ class NewsContainer extends React.Component {
                         setPositionActive={this.setPositionActive} />
                 )
             } else {
-                return (
-                    <Error>
-                        <div className={errorClasses.Text}>Lo sentimos, no hemos encontrado resultados para su búsqueda. </div>
-                    </Error>
-                );
+                return this.getErrorMessage();
             }
         }
-    
-        
-        return null;
+        return this.getErrorMessage();
     }
 
-    filterNewsByCategory = (news, category) => {
-        const newsToDisplay = news.filter((newInternal) => {
-            if(newInternal.category) {
-                return newInternal.category.toUpperCase()  === category.toUpperCase();
-            }
-            return false;
-        });
-        return newsToDisplay;
-    }
-    
-    filterNewsBySearch = (news, search) => {
-        const newsToDisplay = news.filter((newInternal) => {
-            if(newInternal.title) {
-                return newInternal.title.toUpperCase().includes(search.toUpperCase());
-            }
-            return false;
-        });
-        return newsToDisplay;
+    getErrorMessage = () => {
+        return (
+            <Error>
+                <div className={errorClasses.Text}>Lo sentimos, no hemos encontrado resultados para su búsqueda. </div>
+            </Error>
+        );
     }
 }
+
 
 const mapStatetoProps = state => {
     return {
@@ -103,4 +98,4 @@ const mapStatetoProps = state => {
     };
 };
 
-export default connect(mapStatetoProps)(NewsContainer);
+export default connect(mapStatetoProps, {getNewsBySearch, getNewsByCategoryId, getAllNews })(NewsContainer);

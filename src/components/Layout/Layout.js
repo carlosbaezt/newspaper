@@ -1,25 +1,16 @@
-import React , { useEffect, useState } from 'react';
+import React , { useState } from 'react';
 import Toolbar from '../Toolbar/Toolbar';
 import NewsContainer from '../NewsContainer/NewsContainer';
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { actions } from '../../redux/reducer';
 import styled from 'styled-components';
+const { updateShowOld } = actions;
 
-const { getNews } = actions;
-
-const Layout = ({getNews}) => {
+const Layout = ({updateShowOld, showOld}) => {
     const defaultColor = '#fdebd3';
-    const [color, setColor] = useState(defaultColor);
-
-    useEffect(() => {
-        getNews();
-    }, []);
-
-    const setColorHandler = () => {
-        setColor(color === defaultColor ? '#fff' : defaultColor);
-    }
-
+    const color = showOld ? defaultColor : '#fff';
+    
     const Container = styled.div`
         background-color: ${color};
         min-height: 100vh
@@ -27,20 +18,26 @@ const Layout = ({getNews}) => {
 
     return (
         <Container>
-            <Toolbar setColor={setColorHandler} activeByDefault={color !== defaultColor} />
+            <Toolbar setColor={updateShowOld} activeByDefault={color !== defaultColor} />
             <Switch>
                 <Route
                     path="/category/:categoryName"
-                    render={(props) => <NewsContainer defaultPosition={1} category={props.match.params.categoryName} {...props} />}  />
+                    render={(props) => <NewsContainer home={false} defaultPosition={1} category={props.match.params.categoryName} {...props} />}  />
                 <Route
                     path="/search/:search"
-                    render={(props) => <NewsContainer defaultPosition={1} search={props.match.params.search} {...props} />}  />
+                    render={(props) => <NewsContainer home={false} defaultPosition={1} search={props.match.params.search} {...props} />}  />
                 <Route path="/">
-                    <NewsContainer defaultPosition={1} />
+                    <NewsContainer defaultPosition={1} home={true} />
                 </Route>
             </Switch>
         </Container>
     );
 }
 
-export default connect( null, { getNews })(Layout);
+const mapStatetoProps = state => {
+    return {
+        showOld: state.showOld
+    };
+};
+
+export default connect( mapStatetoProps, { updateShowOld })(Layout);
